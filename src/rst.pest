@@ -3,7 +3,7 @@ blocks        = _{ block ~ (empty_line+ ~ block)* }
 block         = _{ PEEK_ALL ~ hanging_block }
 hanging_block = _{ bullet_list | paragraph }
 
-bullet_list =  { bullet_item+ }
+bullet_list =  { bullet_item ~ (PEEK_ALL ~ bullet_item)* }
 bullet_item =  { "-" ~ PUSH(" "+) ~ line ~ blist_body? ~ DROP }
 blist_body  = _{ PEEK[..-1] ~ PUSH(" " ~ POP) ~ hanging_block ~ block* }
 
